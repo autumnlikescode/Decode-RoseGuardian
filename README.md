@@ -42,15 +42,38 @@ formatted_code = autopep8.fix_code(loaded_code)
 
 The loaded code object is formatted for readability and adherence to Python coding standards using `autopep8.fix_code()`. The `formatted_code` variable contains the formatted Python code.
 
-## Usage
+# Full Decoding Script
+```python
+import marshal
+import zlib
+import base64
+import autopep8
 
-To use the script, provide the compressed and base64 encoded data as input. Run the script using Python.
+# Compressed and base64 encoded data
+compressed_data = b'eJxNkNFLwzAQxudr/orzKQ3MPm1DhD6piAxkIFgRQdI06W5rcyOXDfzvTdeADYHku3C/77vw4WaxwOFEIULQvqVhCRwD+k7kaqPZblZCiNY6IPdlXt/x4C6FehCQVtdTo3u46HCV6YQK5B5RXvUpoWKRqioRJjHZlGZPaCwXk1up2SD+9DZGG3gJx2qtlJjb5e4pTtlsVtYbau3ILvNVnqO7u5dKjWam18zwgbXZ6if/8jjFTaUKGvntd8912vOQzCpPuXVvu/r3k45D4c9DHtRRAAT04zd1dvbwT5AtdQw6WDBE/a0ceTPWWok/MtZvYw=='
 
-Example:
+try:
+    # Step 1: Decode base64 and decompress the data
+    decompressed_data = zlib.decompress(base64.b64decode(compressed_data))
 
-```sh
-python script.py
+    # Step 2: Load the decompressed data as a Python code object
+    loaded_code = marshal.loads(decompressed_data)
+
+    # Step 3: Format the code using autopep8
+    formatted_code = autopep8.fix_code(loaded_code)
+
+    # Step 4: Print the formatted code
+    print(formatted_code)
+
+except Exception as e:
+    # Handle any exceptions that might occur during the process
+    print("An error occurred:", e)
+
+
 ```
+# Final Output
+If everything went well, you should be met with something that looks like this in CLI, showing the decoded code
+![image](https://github.com/autumnlikescode/Decode-RoseGuardian/assets/102363146/328ef896-203b-4262-95e9-0524378e2dc6)
 
 ## Dependencies
 
